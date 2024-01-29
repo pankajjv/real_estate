@@ -1,10 +1,14 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
-export const signUp = async(req, res) =>{
+import { errorHandler } from "../utils/error.js";
+export const signUp = async(req, res, next) =>{
     console.log(req.body);
     const {username, email, password} = req.body;
     if(!username || !email || !password){
         res.json("pls enter valid details")
+    }
+    if(password.length < 5){
+        next(errorHandler(401, 'the length of password must be more then 8 characters'))
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     console.log(hashedPassword)
@@ -15,7 +19,10 @@ export const signUp = async(req, res) =>{
 
     }
     catch(error){
-        res.json(error.message)
+        // next(errorHandler(500, error.message));
+        next(error);
+
+
     }
     
 }
