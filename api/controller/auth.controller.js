@@ -7,9 +7,10 @@ export const signUp = async(req, res, next) =>{
     if(!username || !email || !password){
         res.json("pls enter valid details")
     }
-    if(password.length < 5){
-        next(errorHandler(401, 'the length of password must be more then 8 characters'))
-    }
+    //errorHandling is good for custom error
+    // if(password.length < 5){
+    //     next(errorHandler(401, 'the length of password must be more then 8 characters'))
+    // }
     const hashedPassword = await bcrypt.hash(password, 10);
     console.log(hashedPassword)
     const newUser = new User({username, email, password: hashedPassword});
