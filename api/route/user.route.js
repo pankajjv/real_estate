@@ -1,9 +1,12 @@
 import express from "express";
-import { home } from "../controller/user.controller.js";
-import { test } from "../controller/user.controller.js";
-const router  = express.Router();
+import { deleteUser, getUserListings, update, getAuthor } from "../controller/user.controller.js";
+import { verifyToken } from "../utils/verifyUser.js";
 
-router.get('/', home)
-router.get('/test', test)
+const router = express.Router();
 
-export default router;
+router.get('/listing/:id',verifyToken, getUserListings)
+router.post('/update/:id', verifyToken, update);
+router.delete('/delete/:id', verifyToken, deleteUser);
+router.get('/:id',verifyToken, getAuthor)
+
+export default router

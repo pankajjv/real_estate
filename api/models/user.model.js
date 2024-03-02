@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
+    },
+    avatar: {
+        type: String,
+        default: "https://www.freepik.com/free-photos-vectors/anonymous-profile"
     }
 }, {timestamps: true})
 
